@@ -1,313 +1,181 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>立创商城优惠券辅助</title>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<html lang="zh-CN">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="立创商城优惠券助手 - 帮助选择立创商城优惠券的工具网站"
+    />
+    <meta name="keywords" content="立创商城,优惠券,电子元件,PCB" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
-    <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-            color: #333;
-            line-height: 1.6;
-        }
+    <!-- Title and Favicon -->
+    <title>立创商城优惠券助手</title>
+    <link rel="icon" type="image/svg+xml" href="logo.ico" />
 
-        a {
-            color: #1abc9c; /* 柔和的蓝绿色 */
-            text-decoration: none;
-            border-radius: 8px;
-            padding: 2px 4px;
-        }
+    <!-- External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
 
-        a:hover {
-            color: #16a085; /* 悬停时的深蓝绿色 */
-            text-decoration: underline;
-        }
+    <!-- Internal Resources -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
 
-        h1, h2, h3 {
-            color: #333;
-        }
+    <!-- Analytics -->
+    <script
+      async
+      src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+    ></script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "pwtqxzby84");
+    </script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="topbar">
+      <h1>立创商城优惠券助手</h1>
+      <nav class="topbar-right">
+        <button class="search-toggle" id="searchToggle" aria-label="搜索">
+          <i class="fas fa-search"></i>
+        </button>
+        <a
+          href="https://github.com/xiaowine/szlcsc-help"
+          target="_blank"
+          class="github-link"
+          title="查看项目源码"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+        <button class="info-button" id="showInfo">使用说明</button>
+      </nav>
+    </header>
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    <!-- Search Section -->
+    <section class="search-container" role="search">
+      <label class="sr-only" for="categorySearch">搜索分类</label>
+      <input
+        type="text"
+        class="search-box"
+        id="categorySearch"
+        placeholder="搜索分类..."
+        aria-label="搜索分类"
+      />
+      <button class="search-close" id="searchClose" aria-label="关闭搜索">
+        <i class="fas fa-times"></i>
+      </button>
+    </section>
 
-        h2 {
-            padding-bottom: 5px;
-            margin-top: 20px;
-        }
+    <!-- Info Modal -->
+    <dialog class="modal" id="infoModal">
+      <div class="modal-content">
+        <button class="close-button" id="closeModal" aria-label="关闭说明">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2>使用说明</h2>
+        <div class="description">
+          <p>这是一个帮助选择立创商城领券中心优惠券的工具网站。</p>
+          <p>
+            由于立创商城的优惠券每月更新，且大部分品牌不太熟悉，本站可以帮助您更好地选择优惠券。
+          </p>
+          <p>
+            网站只显示有优惠券且符合条件（非新人专享，优惠后消费小于15元）的厂商。
+          </p>
+          <p>本项目仅用于辅助，不涉及任何商业行为。如有侵权，请联系删除。</p>
+          <p>数据来源：立创商城优惠券中心</p>
+        </div>
+      </div>
+    </dialog>
 
-        /* Classification and Content Layout */
-        .content {
-            margin: 0 auto;
-        }
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Statistics Section -->
+      <section class="stats" aria-label="网站统计">
+        <h3 id="run_time">更新时间</h3>
+        <div id="busuanzi_container_site_pv" class="stats-item">
+          总访问量：<span id="busuanzi_value_site_pv"></span>
+        </div>
+        <div id="busuanzi_container_site_uv" class="stats-item">
+          访客数：<span id="busuanzi_value_site_uv"></span>
+        </div>
+        <div id="count" class="stats-item">统计加载中...</div>
+        <a
+          href="https://github.com/xiaowine/pcb-calculation-tools"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tools-link"
+        >
+          作者写了个立创EDA专业版辅助计算插件，欢迎前来使用
+        </a>
+      </section>
 
-        .classification-list {
-            margin-bottom: 20px;
-            text-align: center;
-        }
+      <!-- Category Navigation -->
+      <nav
+        id="category-nav"
+        class="category-navigation"
+        aria-label="分类导航"
+      ></nav>
 
-        .classification-list a {
-            display: inline-block;
-            margin: 0 10px 10px 0;
-            padding: 8px 12px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #1abc9c; /* 统一浅色模式下的链接颜色 */
-        }
+      <!-- Loading Section -->
+      <div id="loading" class="loading" aria-live="polite">
+        <div class="loading-spinner" role="status">
+          <span class="sr-only">数据加载中...</span>
+        </div>
+        <p>数据加载中...</p>
+      </div>
 
-        .classification-list a:hover {
-            background-color: #ccc;
-        }
+      <!-- Coupon Grid -->
+      <section
+        id="coupon-grid"
+        class="coupon-grid"
+        aria-label="优惠券列表"
+      ></section>
 
-        /* Coupon Sections */
-        .coupon-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
-            padding: 0 20px; /* Added screen margin */
-        }
-
-        .category-section {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 15px; /* Added rounded corners */
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .coupon-item {
-            margin-bottom: 10px;
-        }
-
-        .coupon-item a {
-            color: inherit; /* 使用默认文字颜色，取消链接特殊颜色 */
-        }
-
-        .coupon-item a:hover {
-            text-decoration: underline;
-        }
-
-        /* Utility Styles */
-        .stats {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .stats div {
-            margin: 10px 0;
-        }
-
-        .description {
-            margin-bottom: 20px;
-        }
-
-        /* Divider */
-        .divider {
-            height: 2px;
-            background-color: #ccc;
-            margin: 20px 0;
-        }
-
-        /* Loading Message */
-        #loading-message {
-            font-size: 20px;
-            font-weight: bold;
-            color: #a024e8;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            .classification-list a {
-                margin: 0 5px 5px 0;
-                padding: 5px 8px;
-            }
-        }
-
-        /* Dark mode styles */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #121212;
-                color: #e0e0e0;
-            }
-
-            a {
-                color: #1abc9c;
-            }
-
-            a:hover {
-                color: #16a085;
-            }
-
-            .classification-list a {
-                background-color: #333;
-                color: #1abc9c; /* 统一深色模式下的链接颜色 */
-            }
-
-            .classification-list a:hover {
-                background-color: #444;
-            }
-
-            .coupon-item a {
-                color: inherit; /* 保持和文本颜色一致 */
-            }
-
-            .category-section {
-                background-color: #1e1e1e;
-                border-color: #444;
-            }
-
-            h1, h2, h3 {
-                color: #e0e0e0;
-            }
-
-            .stats div, .description p {
-                color: #cccccc; /* 更明显的文字颜色 */
-            }
-
-            .divider {
-                background-color: #333;
-            }
-        }
-    </style>
-</head>
-<body>
-<h1>立创商城优惠券辅助</h1>
-
-<div class="content">
-    <!-- Description Section -->
-    <div class="description">
-        <p>
-            这是个网站项目，用于帮忙选择立创商城领券中心的优惠券。
-        </p>
-        <p>
-            因为立创商城的优惠券每月都会更新，并且大部分品牌都不认识，不知道有啥卖的，所以就做了这个网站。
-        </p>
-        <p>
-            本项目仅用于辅助项目，不涉及任何商业行为。
-        </p>
-        <p>
-            如果有侵权，请联系我删除。
-        </p>
-        <p>
-            数据来源：立创商城领券中心。
-        </p>
-    </div>
-
-    <!-- Runtime Info -->
-    <h3 id="run_time">更新时间</h3>
-
-    <!-- Stats Section -->
-    <div class="stats">
-        <div id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</div>
-        <div id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人次</div>
-    </div>
-
-    <h3><a href="https://github.com/xiaowine/szlcsc-help" target="_blank">本项目开源链接</a></h3>
-
-    <!-- Coupon Stats and Classification Links -->
-    <h2 id="count">统计</h2>
-    <div class="classification-list" id="classification-list"></div>
-
-    <!-- Coupon Sections -->
-    <main id="content" class="coupon-section">
-        <p id="loading-message">数据加载中</p>
+      <!-- Back to Top Button -->
+      <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+      </button>
     </main>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Fetch and display runtime info
-        fetch('run_time.txt')
-            .then(response => response.text())
-            .then(content => {
-                document.getElementById('run_time').textContent = `更新时间：${content}`;
-            })
-            .catch(console.error);
-
-        // Fetch and display coupon data
-        fetch('coupon_details.json')
-            .then(response => response.json())
-            .then(data => {
-                const loadingMessage = document.getElementById('loading-message');
-                loadingMessage && loadingMessage.remove();
-
-                const classification = {};
-                let brandCount = 0, categoryCount = 0;
-
-                // Process data into categories
-                Object.entries(data).forEach(([category, items]) => {
-                    categoryCount++;
-                    classification[category] = items.map(coupon => {
-                        brandCount++;
-                        return {
-                            name: coupon.brand_name,
-                            url: `https://list.szlcsc.com/brand/${coupon.brand_id}.html`,
-                            details: coupon
-                        };
-                    });
-                });
-
-                // Update stats
-                document.getElementById('count').textContent = `厂商数：${brandCount}, 元件分类数: ${categoryCount}`;
-
-                // Generate classification links
-                const classificationList = document.getElementById('classification-list');
-                Object.keys(classification).forEach(category => {
-                    const link = document.createElement('a');
-                    link.href = `#${category}`;
-                    link.textContent = category;
-                    classificationList.appendChild(link);
-                });
-
-                // Generate coupon sections
-                const content = document.getElementById('content');
-                Object.entries(classification).forEach(([category, coupons]) => {
-                    const section = document.createElement('div');
-                    section.className = "category-section";
-                    section.id = category;
-
-                    const title = document.createElement('h2');
-                    title.textContent = category;
-                    section.appendChild(title);
-
-                    const list = document.createElement('ul');
-                    coupons.forEach(coupon => {
-                        const listItem = document.createElement('li');
-                        listItem.className = "coupon-item";
-                        const link = document.createElement('a');
-                        link.href = coupon.url;
-                        link.target = '_blank';
-                        link.textContent = `${coupon.details.coupon_name} (优惠后最低消费${coupon.details.min_order_after_discount}元)`;
-                        listItem.appendChild(link);
-                        list.appendChild(listItem);
-                    });
-
-                    section.appendChild(list);
-                    content.appendChild(section);
-                });
-            })
-            .catch(error => {
-                const loadingMessage = document.getElementById('loading-message');
-                if (loadingMessage) {
-                    loadingMessage.textContent = '加载失败，请稍后再试';
-                }
-                console.error(error);
-            });
-    });
-</script>
-</body>
+    <!-- Template for Coupon Modal (will be populated by JavaScript) -->
+    <template id="couponModalTemplate">
+      <div class="coupon-modal-content">
+        <header class="coupon-modal-header">
+          <h2></h2>
+          <button class="coupon-modal-close" aria-label="关闭详情">
+            <i class="fas fa-times"></i>
+          </button>
+        </header>
+        <div class="coupon-modal-body">
+          <ul class="coupon-list"></ul>
+        </div>
+      </div>
+    </template>
+  </body>
 </html>
